@@ -2,22 +2,15 @@
 # Cookbook Name:: ntp
 # Recipe:: default
 #
-# Copyright 2015, UKATRU
+# Copyright 2015, Uma M Katru.
 #
 # All rights reserved - Do Not Redistribute
 #
-package node[:ntp_pkg] do
-  action :install
+
+package "ntp" do 
+	action [:install] 
 end
 
-service 'ntpd' do
-  action [ :enable, :start ]
+service node[:ntp][:service] do
+	 action [:enable,:start]
 end
-
-cookbook_file "/etc/ntp.conf" do
-  source "ntp.conf"
-  mode "0644"
-  notifies :restart, 'service[ntpd]'
-end
-
-
